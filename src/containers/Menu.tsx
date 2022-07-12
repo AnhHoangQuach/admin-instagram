@@ -4,12 +4,14 @@ import { Link, useLocation } from 'react-router-dom';
 import { privateRoute } from 'routes';
 
 const StyledListItem = styled(ListItemButton)({
-  borderRadius: 8,
+  borderRadius: '8px !important',
   '&.Mui-selected': {
     backgroundColor: 'var(--color-primary-main) !important',
+    color: '#fff',
   },
   '&:hover': {
     backgroundColor: 'var(--color-primary-light) !important',
+    color: '#fff',
   },
 });
 

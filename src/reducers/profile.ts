@@ -4,7 +4,7 @@ import { RootState } from 'reducers';
 export type ProfileState = {
   id?: number;
   isLoggedIn?: boolean;
-  accessToken?: string;
+  token?: string;
 };
 
 export const profileSlice = createSlice({

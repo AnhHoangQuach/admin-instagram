@@ -25,7 +25,7 @@ const onError = async (error: AxiosError) => {
     if (status === 401) {
       store.dispatch(signOut());
     } else {
-      const { message } = data;
+      const { message }: { message: string } = data;
       store.dispatch(openNotification({ message, variant: 'error' }));
     }
   }

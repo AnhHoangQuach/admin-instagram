@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "@types/humps": "^2.0.2",
+    "@types/luxon": "^2.3.2",
     "autoprefixer": "^10.4.7",
     "postcss": "^8.4.14",
     "prettier": "2.7.1",

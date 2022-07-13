@@ -16,7 +16,5 @@ export type UserType = {
 };
 
 export type GetUserData = {
-  data: {
-    user: UserType;
-  };
+  user: UserType;
 };

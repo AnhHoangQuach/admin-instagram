@@ -21,13 +21,12 @@ const beforeRequest = (config: AxiosRequestConfig) => {
 const onError = async (error: AxiosError) => {
   const { response } = error;
   if (response) {
-    const { status, data } = response as any;
+    const { status, data } = response;
     if (status === 401) {
       store.dispatch(signOut());
     } else {
       const { message } = data;
       store.dispatch(openNotification({ message, variant: 'error' }));
-      return Promise.reject(message);
     }
   }
   return Promise.reject(error);
@@ -41,7 +40,7 @@ client.defaults.paramsSerializer = (params) =>
   );
 
 client.interceptors.request.use(beforeRequest);
-client.interceptors.response.use(({ data }) => data, onError);
+client.interceptors.response.use(({ data }) => data.data, onError);
 
 client.defaults.transformResponse = [...(axios.defaults.transformResponse as []), (data) => camelizeKeys(data)];
 

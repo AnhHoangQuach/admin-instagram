@@ -2,12 +2,11 @@ import { AppHeader } from 'containers';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { privateRoute, staticRoute } from 'routes';
-import { useNotification, useWindowSize } from 'hooks';
+import { useWindowSize } from 'hooks';
 import { profileSelector } from 'reducers/profile';
 import { useEffect } from 'react';
 
 const PrivateLayout = () => {
-  useNotification();
   const { isMobile } = useWindowSize();
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector(profileSelector);

@@ -27,32 +27,17 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   const { mutate: login, isLoading } = useMutation(authService.login, {
-    onSuccess: ({ data }) => {
+    onSuccess: (data) => {
       dispatch(signIn(data));
       authService.getProfile().then((res) => {
-        const { user } = res.data;
+        const { user } = res;
         if (!user) {
-          store.dispatch(
-            openNotification({
-              message: 'Username or password is incorrect',
-              code: 400,
-              variant: 'error',
-            }),
-          );
           dispatch(signOut());
           return;
         }
         dispatch(signIn(user));
+        store.dispatch(openNotification({ message: 'Login successful', variant: 'success' }));
       });
-    },
-    onError: () => {
-      store.dispatch(
-        openNotification({
-          message: 'Username or password is incorrect',
-          code: 400,
-          variant: 'error',
-        }),
-      );
     },
   });
 

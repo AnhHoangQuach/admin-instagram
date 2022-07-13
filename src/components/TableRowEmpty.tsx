@@ -1,7 +1,7 @@
 import { CloudQueue } from '@mui/icons-material';
 import { TableCell, TableRow, Typography } from '@mui/material';
 
-const TableRowEmpty = ({ visible }: { visible: boolean }) => {
+const TableRowEmpty = ({ visible }: { visible: boolean }) => (
   <>
     {visible && (
       <TableRow>
@@ -11,7 +11,7 @@ const TableRowEmpty = ({ visible }: { visible: boolean }) => {
         </TableCell>
       </TableRow>
     )}
-  </>;
-};
+  </>
+);
 
 export default TableRowEmpty;

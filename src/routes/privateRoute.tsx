@@ -1,4 +1,5 @@
 import { Home } from 'views/Home';
+import { PostList } from 'views/Post';
 
 type RouteType = {
   path: string;
@@ -16,6 +17,11 @@ const privateRoute: PrivateRouteType = {
     path: '/dashboard',
     name: 'Dashboard',
     element: <Home />,
+  },
+  post: {
+    path: '/posts',
+    name: 'Posts',
+    element: <PostList />,
   },
 };
 

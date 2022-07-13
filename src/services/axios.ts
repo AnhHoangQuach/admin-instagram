@@ -21,11 +21,11 @@ const beforeRequest = (config: AxiosRequestConfig) => {
 const onError = async (error: AxiosError) => {
   const { response } = error;
   if (response) {
-    const { status, data } = response;
+    const { status } = response;
     if (status === 401) {
       store.dispatch(signOut());
     } else {
-      const { message }: { message: string } = data;
+      const { message } = response?.data as any;
       store.dispatch(openNotification({ message, variant: 'error' }));
     }
   }

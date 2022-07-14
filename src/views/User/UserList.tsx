@@ -85,7 +85,7 @@ const UserList = () => {
               ))}
               <TableRowEmpty visible={!isFetching && items.length === 0} />
             </TableBody>
-            <caption className='font-bold border-t'>{total ?? 0} Posts</caption>
+            <caption className='font-bold border-t'>{total ?? 0} Users</caption>
           </Table>
         </Spinner>
       </TableContainer>

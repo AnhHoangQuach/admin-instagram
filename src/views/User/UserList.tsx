@@ -7,9 +7,10 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Button,
-  Dialog,
+  Switch,
+  Avatar,
   Chip,
+  Dialog,
 } from '@mui/material';
 import { Spinner, TableRowEmpty } from 'components';
 import { useSearch } from 'hooks';
@@ -17,14 +18,15 @@ import { DateTime } from 'luxon';
 import { useQuery } from 'react-query';
 import { systemService } from 'services';
 import { useState } from 'react';
-import { DeletePostPopup } from 'views/Post';
+import { BlockConfirmPopup } from 'views/User';
+import { UserType } from 'types/User';
 
-const PostList = () => {
+const UserList = () => {
   const [dataSearch, onSearchChange] = useSearch();
 
   const { data, isFetching } = useQuery(
-    ['systemService.fetchPosts', dataSearch],
-    () => systemService.fetchPosts(dataSearch),
+    ['systemService.fetchUsers', dataSearch],
+    () => systemService.fetchUsers(dataSearch),
     { keepPreviousData: true },
   );
 
@@ -32,11 +34,7 @@ const PostList = () => {
 
   const [openPopup, setOpenPopup] = useState(false);
 
-  const [postChoice, setPostChoice] = useState('');
-
-  const checkFileType = (type: string) => {
-    return ['png', 'jpg', 'jpeg'].includes(type);
-  };
+  const [userChoice, setUserChoice] = useState<UserType>();
 
   return (
     <>
@@ -46,36 +44,24 @@ const PostList = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell>Images</TableCell>
-                <TableCell>User</TableCell>
-                <TableCell>Caption</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Hashtags</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Fullname</TableCell>
+                <TableCell>Username</TableCell>
+                <TableCell>Avatar</TableCell>
                 <TableCell>Created At</TableCell>
                 <TableCell>Updated At</TableCell>
-                <TableCell></TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.id}</TableCell>
+                  <TableCell className='text-center'>{item.id}</TableCell>
+                  <TableCell className='text-center'>{item.email}</TableCell>
+                  <TableCell className='text-center'>{item.fullname}</TableCell>
+                  <TableCell className='text-center'>{item.username}</TableCell>
                   <TableCell className='text-center'>
-                    {checkFileType(item.images[0].format) ? (
-                      <img src={item.images[0].secureUrl} alt='' height={250} width={250} />
-                    ) : (
-                      <video src={item.images[0].secureUrl} controls height={250} width={250} />
-                    )}
-                  </TableCell>
-                  <TableCell className='text-center'>{item.user.username}</TableCell>
-                  <TableCell className='text-center'>{item.caption}</TableCell>
-                  <TableCell className='text-center'>{item.type}</TableCell>
-                  <TableCell className='text-center'>
-                    <div className='flex items-center space-x-2'>
-                      {item.hashtags.map((hashtag, index) => (
-                        <Chip label={hashtag} key={index} />
-                      ))}
-                    </div>
+                    <Avatar src={item.avatar} alt='' />
                   </TableCell>
                   <TableCell className='text-center'>
                     {DateTime.fromISO(item.createdAt).toFormat('dd/MM/yyyy HH:mm')}
@@ -84,17 +70,16 @@ const PostList = () => {
                     {DateTime.fromISO(item.updatedAt).toFormat('dd/MM/yyyy HH:mm')}
                   </TableCell>
                   <TableCell className='text-center'>
-                    <Button
-                      variant='outlined'
-                      color='error'
-                      size='small'
-                      onClick={() => {
-                        setOpenPopup(true);
-                        setPostChoice(item.id);
-                      }}
-                    >
-                      Delete
-                    </Button>
+                    <div className='flex items-center justify-center'>
+                      <Switch
+                        checked={item.isBlocked}
+                        onClick={() => {
+                          setOpenPopup(true);
+                          setUserChoice(item);
+                        }}
+                      />
+                      <Chip label={item.isBlocked ? 'Blocked' : 'Active'} />
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -114,10 +99,14 @@ const PostList = () => {
       </div>
 
       <Dialog fullWidth maxWidth='xs' open={openPopup} onClose={() => setOpenPopup(false)}>
-        <DeletePostPopup postId={postChoice} onClose={() => setOpenPopup(false)} />
+        <BlockConfirmPopup
+          isBlocked={userChoice?.isBlocked!}
+          userId={userChoice?.id!}
+          onClose={() => setOpenPopup(false)}
+        />
       </Dialog>
     </>
   );
 };
 
-export default PostList;
+export default UserList;

@@ -33,12 +33,13 @@ const MenuItem = ({ name, path }: MenuItemProps) => {
 };
 
 const Menu = () => {
-  const { home, post } = privateRoute;
+  const { home, post, user } = privateRoute;
   return (
     <>
       <List className='flex flex-col gap-1'>
         <MenuItem {...home} />
         <MenuItem {...post} />
+        <MenuItem {...user} />
       </List>
     </>
   );

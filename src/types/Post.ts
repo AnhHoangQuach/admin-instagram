@@ -1,4 +1,4 @@
-import { UserType } from 'types/Auth';
+import { UserType } from 'types/User';
 import { PaginateType } from 'types/Common';
 
 export type PostImageType = {
@@ -15,6 +15,7 @@ export type PostType = {
   images: PostImageType[];
   thumbnail: string[];
   user: UserType;
+  type: string;
   caption: string;
   hashtags: string[];
   createdAt: string;

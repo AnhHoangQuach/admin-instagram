@@ -18,7 +18,7 @@ import { DateTime } from 'luxon';
 import { useQuery } from 'react-query';
 import { systemService } from 'services';
 import { useState } from 'react';
-import { BlockConfirmPopup } from 'views/User';
+import { BlockConfirmPopup, UserSearch } from 'views/User';
 import { UserType } from 'types/User';
 
 const UserList = () => {
@@ -38,7 +38,8 @@ const UserList = () => {
 
   return (
     <>
-      <TableContainer component={Paper} className='mt-0'>
+      <UserSearch onChange={onSearchChange} />
+      <TableContainer component={Paper}>
         <Spinner loading={isFetching}>
           <Table>
             <TableHead>

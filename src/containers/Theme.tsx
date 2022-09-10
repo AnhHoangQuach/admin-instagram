@@ -35,9 +35,9 @@ export const appTheme = createTheme({
         disableElevation: true,
       },
       styleOverrides: {
-        sizeLarge: { minHeight: 48, minWidth: 48 },
-        sizeMedium: { minHeight: 40, minWidth: 40 },
-        sizeSmall: { minHeight: 32, minWidth: 32 },
+        sizeLarge: { minHeight: 56, minWidth: 56 },
+        sizeMedium: { minHeight: 48, minWidth: 48 },
+        sizeSmall: { minHeight: 40, minWidth: 40 },
       },
     },
     MuiTooltip: {
